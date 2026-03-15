@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heavenly Soaps by Mary</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose:  #C8637A;
+    --blush: #F2C4CE;
+    --deep:  #2D1B22;
+    --cream: #FDF8F5;
+    --sage:  #8BAF8E;
+    --gold:  #C9A84C;
+    --soft:  #FAF0EC;
+    --muted: rgba(45,27,34,0.55);
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Jost',sans-serif; background:var(--cream); color:var(--deep); overflow-x:hidden; }
+
+  /* NAV */
+  nav { position:sticky; top:0; z-index:200; display:flex; justify-content:space-between; align-items:center; padding:1rem 3rem; background:rgba(253,248,245,0.96); backdrop-filter:blur(10px); border-bottom:1px solid rgba(200,99,122,0.12); }
+  .logo { font-family:'Cormorant Garamond',serif; font-size:1.45rem; font-weight:700; color:var(--rose); line-height:1.15; }
+  .logo span { display:block; font-size:.6rem; font-family:'Jost',sans-serif; font-weight:500; letter-spacing:3.5px; text-transform:uppercase; color:var(--sage); }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { color:var(--deep); text-decoration:none; font-size:.88rem; font-weight:500; letter-spacing:.5px; transition:color .2s; }
+  .nav-links a:hover { color:var(--rose); }
+  .cart-btn { background:var(--rose); color:#fff; border:none; padding:.6rem 1.4rem; border-radius:100px; font-family:'Jost',sans-serif; font-weight:600; font-size:.88rem; cursor:pointer; display:flex; align-items:center; gap:.45rem; transition:transform .15s,background .2s; }
+  .cart-btn:hover { transform:scale(1.05); background:#b8536a; }
+  .cart-count { background:var(--gold); color:#fff; border-radius:50%; width:20px; height:20px; font-size:.72rem; display:flex; align-items:center; justify-content:center; font-weight:700; }
+
+  /* HERO */
+  .hero { position:relative; min-height:92vh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; background:linear-gradient(160deg,#fdf0f3 0%,#faf5f0 60%,#f0ede8 100%); padding-bottom:280px; }
+  .hero-wings { position:absolute; inset:0; background-image:url('IMG_7019.jpeg'); background-size:cover; background-position:center top; opacity:.22; pointer-events:none; }
+  .hero-vignette { position:absolute; inset:0; background:radial-gradient(ellipse at center,transparent 30%,rgba(253,248,245,.85) 100%); pointer-events:none; }
+  .hero-content { position:relative; z-index:2; max-width:680px; padding:3rem 2rem 0; }
+  .hero-eyebrow { display:inline-flex; align-items:center; gap:.5rem; font-size:.72rem; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--rose); background:rgba(200,99,122,.08); padding:.35rem 1rem; border-radius:100px; margin-bottom:1.8rem; }
+  .hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,7vw,5.5rem); font-weight:700; line-height:1.02; letter-spacing:-1px; color:var(--deep); margin-bottom:1.2rem; }
+  .hero h1 em { font-style:italic; color:var(--rose); }
+  .hero p { font-size:1.05rem; color:var(--muted); line-height:1.75; max-width:480px; margin:0 auto 2.2rem; }
+  .hero-cta { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { background:var(--rose); color:#fff; border:none; padding:.9rem 2.2rem; border-radius:100px; font-family:'Jost',sans-serif; font-weight:600; font-size:.95rem; cursor:pointer; text-decoration:none; display:inline-block; transition:transform .15s,background .2s; }
+  .btn-primary:hover { transform:scale(1.04); background:#b8536a; }
+  .btn-outline { background:transparent; color:var(--rose); border:2px solid rgba(200,99,122,.45); padding:.9rem 2.2rem; border-radius:100px; font-family:'Jost',sans-serif; font-weight:600; font-size:.95rem; cursor:pointer; text-decoration:none; display:inline-block; transition:all .2s; }
+  .btn-outline:hover { background:var(--rose); color:#fff; border-color:var(--rose); }
+  .hero-photo { position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:min(520px,88%); border-radius:24px 24px 0 0; overflow:hidden; box-shadow:0 -10px 60px rgba(200,99,122,.22); z-index:3; }
+  .hero-photo img { width:100%; display:block; }
+
+  /* TRUST BAR */
+  .trust-bar { background:var(--rose); color:#fff; display:flex; justify-content:center; gap:3.5rem; padding:1.1rem 3rem; flex-wrap:wrap; }
+  .trust-item { display:flex; align-items:center; gap:.5rem; font-size:.82rem; font-weight:500; }
+
+  /* SECTION */
+  .section { padding:5rem 3rem; }
+  .section-header { text-align:center; margin-bottom:3rem; }
+  .section-header h2 { font-family:'Cormorant Garamond',serif; font-size:2.8rem; font-weight:700; color:var(--deep); margin-bottom:.4rem; }
+  .section-header h2 em { font-style:italic; color:var(--rose); }
+  .section-header p { color:var(--muted); font-size:.95rem; }
+
+  /* PRODUCTS GRID */
+  .products-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.5rem; }
+
+  .product-card { background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 2px 18px rgba(45,27,34,.06); transition:transform .22s,box-shadow .22s; }
+  .product-card:hover { transform:translateY(-6px); box-shadow:0 14px 36px rgba(200,99,122,.18); }
+
+  .product-image { width:100%; aspect-ratio:1; position:relative; overflow:hidden; }
+  .product-image img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s; }
+  .product-card:hover .product-image img { transform:scale(1.05); }
+
+  .product-badge { position:absolute; top:1rem; left:1rem; background:var(--sage); color:#fff; font-size:.68rem; font-weight:700; padding:.22rem .7rem; border-radius:100px; text-transform:uppercase; letter-spacing:.6px; z-index:2; }
+  .product-badge.bestseller { background:var(--gold); }
+  .product-badge.bundle { background:var(--rose); }
+  .product-badge.new { background:#7B5EA7; }
+
+  .product-info { padding:1.3rem; }
+  .product-name { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.2rem; margin-bottom:.25rem; color:var(--deep); }
+  .product-desc { color:var(--muted); font-size:.83rem; margin-bottom:1rem; line-height:1.6; }
+  .product-footer { display:flex; justify-content:space-between; align-items:center; }
+  .product-price { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.4rem; color:var(--rose); }
+  .add-btn { background:var(--rose); color:#fff; border:none; padding:.52rem 1.15rem; border-radius:100px; font-family:'Jost',sans-serif; font-weight:600; font-size:.82rem; cursor:pointer; transition:transform .15s,background .2s; }
+  .add-btn:hover { transform:scale(1.07); background:#b8536a; }
+
+  /* WINGS BANNER */
+  .wings-banner { position:relative; min-height:440px; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
+  .wings-banner-bg { position:absolute; inset:0; background-image:url('IMG_7019.jpeg'); background-size:cover; background-position:center; }
+  .wings-banner-overlay { position:absolute; inset:0; background:rgba(253,248,245,.72); }
+  .wings-banner-content { position:relative; z-index:2; max-width:580px; padding:3rem 2rem; }
+  .wings-banner-content .eyebrow { font-size:.72rem; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--rose); margin-bottom:1.2rem; display:block; }
+  .wings-banner-content h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:700; line-height:1.1; color:var(--deep); margin-bottom:1rem; }
+  .wings-banner-content h2 em { font-style:italic; color:var(--rose); }
+  .wings-banner-content p { color:var(--muted); font-size:.98rem; line-height:1.75; margin-bottom:1.8rem; }
+
+  /* ABOUT */
+  .about-section { background:var(--deep); color:#fff; padding:5rem 3rem; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+  .about-label { font-size:.7rem; letter-spacing:3px; text-transform:uppercase; color:var(--blush); margin-bottom:1rem; }
+  .about-section h2 { font-family:'Cormorant Garamond',serif; font-size:2.8rem; font-weight:700; margin-bottom:1.2rem; line-height:1.1; }
+  .about-section h2 em { font-style:italic; color:var(--blush); }
+  .about-section p { color:rgba(255,255,255,.6); line-height:1.8; font-size:.97rem; margin-bottom:.9rem; }
+  .about-photo { border-radius:24px; overflow:hidden; box-shadow:0 16px 56px rgba(0,0,0,.35); aspect-ratio:4/3; }
+  .about-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+  .about-bubbles { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.5rem; }
+  .about-bubble { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:1.2rem; }
+  .about-bubble .icon { font-size:1.6rem; margin-bottom:.4rem; }
+  .about-bubble .label { font-weight:600; font-size:.88rem; color:var(--blush); }
+  .about-bubble .sub { font-size:.78rem; color:rgba(255,255,255,.38); margin-top:.15rem; }
+
+  /* PAYMENT */
+  .payment-section { padding:4.5rem 3rem; text-align:center; background:var(--soft); }
+  .payment-section h2 { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:var(--deep); margin-bottom:.4rem; }
+  .payment-section p { color:var(--muted); margin-bottom:2rem; }
+  .payment-pills { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; }
+  .payment-pill { background:#fff; border:1.5px solid rgba(45,27,34,.1); border-radius:14px; padding:1rem 2rem; display:flex; align-items:center; gap:.7rem; font-weight:600; font-size:.93rem; color:var(--deep); box-shadow:0 2px 10px rgba(45,27,34,.05); transition:border-color .2s,transform .2s; }
+  .payment-pill:hover { border-color:var(--rose); transform:translateY(-2px); }
+  .pill-icon { font-size:1.3rem; }
+
+  /* FOOTER */
+  footer { background:var(--deep); color:#fff; padding:2.5rem 3rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+  .footer-logo { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.2rem; color:var(--blush); }
+  .footer-links { display:flex; gap:1.5rem; }
+  .footer-links a { color:rgba(255,255,255,.38); text-decoration:none; font-size:.83rem; transition:color .2s; }
+  .footer-links a:hover { color:var(--blush); }
+  .footer-copy { color:rgba(255,255,255,.28); font-size:.82rem; }
+
+  /* CART MODAL */
+  .overlay { display:none; position:fixed; inset:0; background:rgba(45,27,34,.55); z-index:300; backdrop-filter:blur(5px); }
+  .overlay.open { display:flex; align-items:center; justify-content:center; }
+  .cart-modal { background:var(--cream); border-radius:24px; padding:2rem; width:90%; max-width:480px; max-height:88vh; overflow-y:auto; }
+  .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; }
+  .modal-title { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:700; color:var(--deep); }
+  .close-btn { background:rgba(45,27,34,.07); border:none; color:var(--deep); width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:background .2s; }
+  .close-btn:hover { background:var(--rose); color:#fff; }
+  .cart-item { display:flex; align-items:center; gap:1rem; padding:.9rem 0; border-bottom:1px solid rgba(45,27,34,.07); }
+  .cart-item-icon { width:56px; height:56px; border-radius:12px; overflow:hidden; flex-shrink:0; background:var(--soft); }
+  .cart-item-icon img { width:100%; height:100%; object-fit:cover; }
+  .cart-item-info { flex:1; }
+  .cart-item-name { font-weight:600; font-size:.93rem; color:var(--deep); margin-bottom:.2rem; }
+  .cart-item-price { color:var(--rose); font-weight:700; font-family:'Cormorant Garamond',serif; font-size:1.05rem; }
+  .qty-controls { display:flex; align-items:center; gap:.45rem; }
+  .qty-btn { background:rgba(45,27,34,.07); border:none; width:26px; height:26px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; color:var(--deep); transition:background .2s; }
+  .qty-btn:hover { background:var(--rose); color:#fff; }
+  .qty-num { font-weight:600; min-width:20px; text-align:center; font-size:.88rem; }
+  .remove-item { background:none; border:none; color:rgba(45,27,34,.22); cursor:pointer; font-size:1rem; transition:color .2s; margin-left:.4rem; }
+  .remove-item:hover { color:var(--rose); }
+  .cart-total { display:flex; justify-content:space-between; align-items:center; padding:1.1rem 0; margin-top:.4rem; }
+  .cart-total-label { font-size:.95rem; color:var(--muted); }
+  .cart-total-amount { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.8rem; color:var(--rose); }
+  .checkout-section { margin-top:.3rem; }
+  .checkout-label { font-size:.72rem; color:rgba(45,27,34,.38); text-align:center; margin-bottom:.75rem; text-transform:uppercase; letter-spacing:1.5px; }
+  .checkout-btns { display:flex; flex-direction:column; gap:.65rem; }
+  .checkout-option { width:100%; padding:.88rem; border-radius:12px; border:none; font-family:'Jost',sans-serif; font-weight:700; font-size:.93rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:.5rem; transition:transform .15s,opacity .2s; }
+  .checkout-option:hover { transform:scale(1.02); opacity:.9; }
+  .paypal { background:#FFC43A; color:#003087; }
+  .card   { background:var(--rose); color:#fff; }
+  .zelle  { background:#6D1ED4; color:#fff; }
+  .zelle-note { font-size:.78rem; color:var(--muted); text-align:center; margin-top:.55rem; }
+  .empty-cart { text-align:center; padding:2.5rem; color:var(--muted); }
+  .empty-cart p { font-size:.95rem; margin-top:.5rem; }
+
+  /* TOAST */
+  .toast { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(100px); background:var(--rose); color:#fff; font-family:'Jost',sans-serif; font-weight:600; padding:.8rem 1.8rem; border-radius:100px; font-size:.93rem; z-index:400; transition:transform .3s cubic-bezier(.34,1.56,.64,1); pointer-events:none; box-shadow:0 6px 24px rgba(200,99,122,.38); }
+  .toast.show { transform:translateX(-50%) translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width:768px) {
+    nav { padding:1rem 1.5rem; }
+    .nav-links { display:none; }
+    .hero { padding-bottom:0; min-height:auto; }
+    .hero-content { padding:3.5rem 1.5rem 2rem; }
+    .hero-photo { position:static; transform:none; width:100%; border-radius:0; }
+    .section { padding:3rem 1.5rem; }
+    .about-section { grid-template-columns:1fr; padding:3rem 1.5rem; gap:2.5rem; }
+    .payment-section { padding:3rem 1.5rem; }
+    .trust-bar { gap:1.2rem; padding:1rem 1.5rem; }
+    footer { padding:2rem 1.5rem; flex-direction:column; text-align:center; }
+    .wings-banner { min-height:320px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Heavenly Soaps<span>by Mary</span></div>
+  <ul class="nav-links">
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#payment">Payment</a></li>
+  </ul>
+  <button class="cart-btn" onclick="openCart()">🛒 Cart <span class="cart-count" id="cartCount">0</span></button>
+</nav>
+
+<section class="hero">
+  <div class="hero-wings"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">🌿 Handcrafted with love</span>
+    <h1>Soaps that feel<br><em>heavenly.</em></h1>
+    <p>Natural herbal soaps made by hand — beautifully wrapped and crafted with care for your skin.</p>
+    <div class="hero-cta">
+      <a href="#products" class="btn-primary">Shop the Collection</a>
+      <a href="#about" class="btn-outline">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="IMG_6826.jpeg" alt="Heavenly Soaps collection">
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item">🌿 All Natural Ingredients</div>
+  <div class="trust-item">🤲 Handcrafted by Mary</div>
+  <div class="trust-item">💛 Made with Love</div>
+  <div class="trust-item">📦 Beautifully Packaged</div>
+</div>
+
+<section class="section" id="products">
+  <div class="section-header">
+    <h2>The <em>Collection</em></h2>
+    <p>Every bar is handmade, wrapped with care, and ready to gift — or keep for yourself.</p>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<div class="wings-banner">
+  <div class="wings-banner-bg"></div>
+  <div class="wings-banner-overlay"></div>
+  <div class="wings-banner-content">
+    <span class="eyebrow">✦ Heavenly Soaps by Mary</span>
+    <h2>Made with <em>intention,</em><br>wrapped with love.</h2>
+    <p>Every bar leaves your skin feeling soft and your heart feeling good about what you put on your body.</p>
+    <a href="#products" class="btn-primary">Shop Now</a>
+  </div>
+</div>
+
+<section class="about-section" id="about">
+  <div>
+    <div class="about-label">✦ Our Story</div>
+    <h2>Made by hand,<br><em>made with heart.</em></h2>
+    <p>Mary started making soaps at home using herbal recipes she refined over time. Every bar is made in small batches — so you always get something fresh, intentional, and full of care.</p>
+    <p>No mass production. No harsh chemicals. Just honest soap made the right way, wrapped beautifully and delivered with love.</p>
+    <div class="about-bubbles">
+      <div class="about-bubble"><div class="icon">🌱</div><div class="label">Natural</div><div class="sub">No harsh additives</div></div>
+      <div class="about-bubble"><div class="icon">🧼</div><div class="label">Handmade</div><div class="sub">Small batch craft</div></div>
+      <div class="about-bubble"><div class="icon">💧</div><div class="label">Gentle</div><div class="sub">For all skin types</div></div>
+      <div class="about-bubble"><div class="icon">🌸</div><div class="label">Herbal</div><div class="sub">Real botanicals</div></div>
+    </div>
+  </div>
+  <div class="about-photo">
+    <img src="IMG_6826.jpeg" alt="Heavenly Soaps by Mary">
+  </div>
+</section>
+
+<section class="payment-section" id="payment">
+  <h2>Easy Checkout</h2>
+  <p>Multiple ways to pay — whatever works best for you.</p>
+  <div class="payment-pills">
+    <div class="payment-pill"><span class="pill-icon">💳</span> Credit / Debit Card</div>
+    <div class="payment-pill"><span class="pill-icon">🅿️</span> PayPal</div>
+    <div class="payment-pill"><span class="pill-icon">💜</span> Zelle</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Heavenly Soaps by Mary</div>
+  <div class="footer-links"><a href="#products">Shop</a><a href="#about">About</a><a href="#payment">Payment</a></div>
+  <div class="footer-copy">© 2026 Heavenly Soaps by Mary. All rights reserved.</div>
+</footer>
+
+<div class="overlay" id="cartOverlay" onclick="closeCartOnOverlay(event)">
+  <div class="cart-modal">
+    <div class="modal-header">
+      <span class="modal-title">Your Cart 🛒</span>
+      <button class="close-btn" onclick="closeCart()">✕</button>
+    </div>
+    <div id="cartItems"></div>
+    <div id="cartFooter"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const products = [
+    {
+      id:1, name:"Honey Soap", price:5.00,
+      desc:"A golden honeycomb bar packed with natural honey. Deeply moisturizing and gentle on all skin types.",
+      badge:"New", badgeClass:"new", photo:"soap-honey.jpeg"
+    },
+    {
+      id:2, name:"Activated Charcoal Soap", price:5.00,
+      desc:"Deep cleansing charcoal bar with intricate detailing. Pulls out impurities and leaves skin feeling fresh.",
+      badge:"Fan Fave", badgeClass:"bestseller", photo:"soap-charcoal.jpeg"
+    },
+    {
+      id:3, name:"Rose Soap", price:5.00,
+      desc:"A soft floral bar shaped like a bloom. Made with real rose botanicals for sensitive, delicate skin.",
+      badge:"Bestseller", badgeClass:"bestseller", photo:"soap-rose.jpeg"
+    },
+    {
+      id:4, name:"Curcumin Soap", price:5.00,
+      desc:"Turmeric-based soap known for brightening and anti-inflammatory properties. Handwrapped with twine.",
+      badge:null, badgeClass:"", photo:"soap-curcumin.jpeg"
+    },
+    {
+      id:5, name:"Rice Soap", price:5.00,
+      desc:"A brightening bar with rice milk. Light, gentle, and moisturizing — perfect for everyday use.",
+      badge:"Popular", badgeClass:"", photo:"soap-rice.jpeg"
+    },
+    {
+      id:6, name:"Lavender Soap", price:5.00,
+      desc:"Calming lavender with real botanicals. Beautifully wrapped with a handmade tag. Perfect for winding down.",
+      badge:null, badgeClass:"", photo:"soap-lavender.jpeg"
+    },
+    {
+      id:7, name:"Soap Bundle — 6 Bars", price:25.00,
+      desc:"Any 6 handcrafted bars of your choice. A beautiful gift set — or treat yourself. Saves you $5.",
+      badge:"Bundle", badgeClass:"bundle", photo:"IMG_6826.jpeg"
+    },
+  ];
+
+  let cart = [];
+
+  function renderProducts() {
+    document.getElementById('productsGrid').innerHTML = products.map(p => `
+      <div class="product-card">
+        <div class="product-image">
+          ${p.badge ? `<span class="product-badge ${p.badgeClass}">${p.badge}</span>` : ''}
+          <img src="${p.photo}" alt="${p.name}" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.desc}</div>
+          <div class="product-footer">
+            <span class="product-price">$${p.price.toFixed(2)}</span>
+            <button class="add-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function addToCart(id) {
+    const p = products.find(p => p.id === id);
+    const ex = cart.find(i => i.id === id);
+    if (ex) ex.qty++; else cart.push({...p, qty:1});
+    updateCartCount();
+    showToast(`${p.name} added to cart!`);
+  }
+
+  function updateCartCount() {
+    document.getElementById('cartCount').textContent = cart.reduce((s,i) => s+i.qty, 0);
+  }
+
+  function changeQty(id, delta) {
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+    updateCartCount(); renderCart();
+  }
+
+  function removeFromCart(id) { cart = cart.filter(i => i.id !== id); updateCartCount(); renderCart(); }
+  function openCart() { renderCart(); document.getElementById('cartOverlay').classList.add('open'); }
+  function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); }
+  function closeCartOnOverlay(e) { if (e.target === document.getElementById('cartOverlay')) closeCart(); }
+
+  function renderCart() {
+    const itemsEl = document.getElementById('cartItems');
+    const footerEl = document.getElementById('cartFooter');
+    if (!cart.length) {
+      itemsEl.innerHTML = `<div class="empty-cart"><div style="font-size:3rem">🛒</div><p>Your cart is empty.</p></div>`;
+      footerEl.innerHTML = ''; return;
+    }
+    const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+    itemsEl.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-icon"><img src="${item.photo}" alt="${item.name}"></div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</div>
+        </div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+        </div>
+        <button class="remove-item" onclick="removeFromCart(${item.id})">✕</button>
+      </div>
+    `).join('');
+    footerEl.innerHTML = `
+      <div class="cart-total"><span class="cart-total-label">Total</span><span class="cart-total-amount">$${total.toFixed(2)}</span></div>
+      <div class="checkout-section">
+        <div class="checkout-label">Choose how to pay</div>
+        <div class="checkout-btns">
+          <button class="checkout-option paypal" onclick="checkout('PayPal')">🅿️ Pay with PayPal</button>
+          <button class="checkout-option card" onclick="checkout('Card')">💳 Pay with Card</button>
+          <button class="checkout-option zelle" onclick="checkout('Zelle')">💜 Pay with Zelle</button>
+        </div>
+        <div class="zelle-note">For Zelle, we'll send payment instructions after your order.</div>
+      </div>`;
+  }
+
+  function checkout(method) { closeCart(); showToast(`Redirecting to ${method}...`); }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  renderProducts();
+</script>
+</body>
+</html>
