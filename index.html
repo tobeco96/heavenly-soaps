@@ -401,7 +401,25 @@
       </div>`;
   }
 
-  function checkout(method) { closeCart(); showToast(`Redirecting to ${method}...`); }
+  function checkout(method) {
+    const total = cart.reduce((s,i) => s + i.price * i.qty, 0).toFixed(2);
+    const itemNames = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+    if (method === 'PayPal') {
+      const paypalEmail = 'tobeco96@gmail.com';
+      const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(paypalEmail)}&item_name=${encodeURIComponent('Heavenly Soaps by Mary: ' + itemNames)}&amount=${total}&currency_code=USD&no_shipping=0`;
+      closeCart();
+      window.open(url, '_blank');
+    } else if (method === 'Zelle') {
+      closeCart();
+      showToast('Send $' + total + ' via Zelle to tobeco96@gmail.com');
+      setTimeout(() => {
+        alert('Zelle Payment Instructions\n\nSend $' + total + ' to:\ntobeco96@gmail.com\n\nIn the memo write: Heavenly Soaps\n\nWe will confirm your order once payment is received!');
+      }, 300);
+    } else {
+      closeCart();
+      showToast('Card payments coming soon!');
+    }
+  }
 
   function showToast(msg) {
     const t = document.getElementById('toast');
